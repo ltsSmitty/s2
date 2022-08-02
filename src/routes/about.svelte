@@ -1,13 +1,8 @@
 <script>
-	let title = 'SMS sending test';
-
-	const updateTitle = () => {
-		title = 'something completely different';
-	};
 </script>
 
-<div class="index">
-	<h2>{title}</h2>
+<div class="about">
+	<h2>About us</h2>
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
 		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -15,15 +10,12 @@
 		voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
 		non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</p>
-	<button on:click={updateTitle}> click me</button>
-	<input type="text" bind:value={title} />
-
 	<a href="/guides">View guides</a>
-	<a href="about">About</a>
+	<a href="/">Home</a>
 </div>
 
 <style>
-	.index {
+	.about {
 		text-align: center;
 		display: block;
 		margin: 20px auto;
