@@ -4,6 +4,8 @@
 	const updateTitle = () => {
 		title = 'something completely different';
 	};
+
+	const sentMessage = () => {};
 </script>
 
 <div class="index">
