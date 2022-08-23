@@ -1,25 +1,7 @@
-<script context="module" lang="ts">
-	import type { LoadEvent } from '@sveltejs/kit';
-	export type Guide = { title: string; id: number };
-	export async function load({ fetch }: LoadEvent) {
-		const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-		const guides = (await res.json()) as Guide[];
-		if (res.ok) {
-			return {
-				props: {
-					guides
-				}
-			};
-		}
-		return {
-			status: res.status,
-			error: new Error('Could not fetch the guides')
-		};
-	}
-</script>
-
 <script lang="ts">
-	export let guides: Guide[];
+	export let data;
+	import type { Guide } from './+page';
+	export let guides = data.guides as Guide[];
 </script>
 
 <div class="guides">
