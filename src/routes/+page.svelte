@@ -5,7 +5,23 @@
 		title = 'something completely different';
 	};
 
-	const sentMessage = () => {};
+	const sendSMS = async () => {
+		const msgBody = title;
+		const myNum = '14074735068';
+		const response = await fetch('/api/sms', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				msgBody,
+				myNum
+			})
+		});
+		console.log(await response);
+	};
+
+	const addUserToDatabase = async () => {};
 </script>
 
 <div class="index">
@@ -17,7 +33,9 @@
 		voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
 		non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</p>
-	<button on:click={updateTitle}> click me</button>
+	<button on:click={sendSMS}> click me</button>
+	<button on:click={() => console.log(`button clicked`)}> add user to database</button>
+	<!-- <button on:click={() => console.log('hello')}> click me</button> -->
 	<input type="text" bind:value={title} />
 
 	<a href="/guides">View guides</a>

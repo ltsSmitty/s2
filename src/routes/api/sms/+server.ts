@@ -1,19 +1,37 @@
 import { error } from "@sveltejs/kit";
-import type { RequestHandler } from "@sveltejs/kit";
 import twilio from 'twilio';
-import type { MessageListInstanceCreateOptions } from 'twilio/lib/rest/api/v2010/account/message';
+import type { RequestHandler } from "@sveltejs/kit";
 
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-export const POST: RequestHandler = async (req) => {
-    if (!req) {
-        console.error(`Error: Request arrived with an empty body.`);
-        throw error(500, `No body was sent with the request`);
+export const POST: RequestHandler = async ({ request }) => {
+    try {
+        const smsProps = await request.json();
+        console.log(`inside the server: ${JSON.stringify(smsProps)}`);
+
+        const { myNum, msgBody } = smsProps;
+        try {
+            const { sid } = await client.messages.create({
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: myNum,
+                body: msgBody
+            });
+
+            console.log(`sid: ${sid}`);
+            if (sid) {
+                return await new Response(JSON.stringify(`SMS send to ${myNum}. Message SID: ${sid}`))
+            }
+        } catch (err) {
+            console.error(err);
+            throw error(404, 'Failed to send SMS. Check server logs for more details.')
+        }
+
+        return await new Response(JSON.stringify(`done`));
+    }
+    catch (err) {
+        throw error(500, `Improper post, likely POST body was not json. ${err}`)
     }
 
-    console.log(`inside post ${req}`);
-
-    return await new Response(JSON.stringify(`done`));
 
     // const {to, body} = req.request
     // const b = req.request;
